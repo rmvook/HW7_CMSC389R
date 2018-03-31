@@ -2,7 +2,6 @@ import string
 import sys
 import hashlib
 import os
-import string
 
 salt = ''
 pepper = ''
