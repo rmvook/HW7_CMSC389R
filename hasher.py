@@ -2,6 +2,7 @@ import string
 import sys
 import hashlib
 import os
+import string
 
 salt = ''
 pepper = ''
@@ -70,6 +71,32 @@ def main():
 		h.write(hashes[i])
 	'''
 	
+
+def problem_2():
+	password_file = open("darkweb2017-top1000.txt", 'r')
+	hash_file = open("hashes.txt", 'r')
+	output_file = open("output.txt", 'w+')
+
+	hashes = []
+	#read hashes into memory
+	for line in hash_file:
+		hashes.append(line.rstrip())
+
+
+	for line in password_file:
+		for salt in string.ascii_lowercase:
+			hash_512 = hashlib.sha512(salt + line.rstrip()).hexdigest()
+			for current_hash in hashes:
+				if hash_512 == current_hash:
+					print(salt + " " + line.rstrip() + " " + current_hash + "\n")
+					output_file.write(salt + " " + line.rstrip() + " " + current_hash + "\n ")
+			#print hash_512
+			#hash_512 = hash_512.decode("hex").encode("base64")
+			#print hash_512
+
+
+			
+	
 	
 if __name__ == "__main__":
-	main()
+	problem_2()
